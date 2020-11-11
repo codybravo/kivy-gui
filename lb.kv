@@ -1,0 +1,245 @@
+
+WindowManager:
+	MenuScreen:
+	MathScreen:
+	SimtrapScreen:
+	
+<MenuScreen>:
+	NavigationLayout:
+		ScreenManager:
+			Screen:
+		
+				BoxLayout:
+					orientation: "vertical"
+						
+				MDBottomNavigation:
+					panel_color: .9, .9, .9, 1
+							
+					MDBottomNavigationItem:
+				 	   name: 'screen 1'
+				 	   text: 'Python'
+				 	   icon: 'language-python'
+				    	
+				        	
+					MDBottomNavigationItem:
+					    name: 'screen 2'
+					    text: 'Java'
+					    icon: 'language-java'
+					    
+				Widget:
+		    	
+<MenuScreen>:
+	name: "menu"
+            
+	BoxLayout:
+					
+		MDRectangleFlatButton:
+			text: "menu"
+			pos_hint: {'center_x':0.4, 'center_y':0.5}
+			on_press:
+				#root.manager.transition.direction = 'right'
+				app.root.current = 'test'
+			
+		MDRectangleFlatButton:
+			text: "Login"
+			pos_hint: {'center_x':0.5, 'center_y':0.2}
+			on_press:
+				root.manager.transition.direction = 'right'
+				app.root.current = 'math'
+			
+<MenuScreen>:
+	id: menu_s												
+	NavigationLayout:
+		
+		ScreenManager:
+			
+			Screen:
+				
+				BoxLayout:
+					orientation: "vertical"
+					#md_bg_color: 1,.1,0,.5
+				
+					MDToolbar:
+						id: tooltoot
+						title: "Math" 
+						left_action_items: [["menu", lambda x : nav_drawer.toggle_nav_drawer()]]
+						
+					MDTabs:
+						id: tabs
+        			
+
+        				Tab:
+            				text: "Photos"
+            				#on_tab_switch: app.on_tab_switch("physics")
+            				
+            				
+            				ScrollView:
+            					MDList:
+            						OneLineIconListItem:
+										text: 'Math'
+										IconLeftWidget:
+											icon: 'alpha-h-box'
+										
+
+        				Tab:
+            				text: "Gallery"
+            				#on_tab_switch: app.on_tab_switch("Math")
+            				
+				
+					Widget:
+	
+    	MDNavigationDrawer:
+			id: nav_drawer
+			
+			BoxLayout:
+				orientation: 'vertical'
+				#spacing: '8dp'
+				#padding: '8dp'
+				
+				Image:
+					source: 'download.jpeg'
+					
+				MDLabel:
+					text: 'Welcome'
+					font_style: 'H6'
+					size_hint_y: None
+					height: self.texture_size[1]
+					
+				ScrollView:
+					MDList:
+						OneLineIconListItem:
+							text: 'Home'
+							IconLeftWidget:
+								icon: 'alpha-h-box'
+						OneLineIconListItem:
+							text: 'Login'
+							IconLeftWidget:
+								icon: 'user-circle'		
+						OneLineIconListItem:
+							text: 'Logout'
+							IconLeftWidget:
+								icon: 'arrow-back-circle'
+								
+<SimtrapScreen>:
+	name:"simtrap"
+	
+	a:a
+	b:b
+	n:n
+	d:d
+	exp:exp
+	out1:out1
+	out2:out2
+	
+	MDTextField:
+		id:a
+		input_filter: 'float'
+		hint_text: "Enter Lower Limit"
+		pos_hint: {'center_x':0.5,'center_y':0.95}
+		
+	MDTextField:
+		id:b
+		input_filter: 'float'
+		hint_text: "Enter Upper Limit"
+		pos_hint: {'center_x':0.5,'center_y':0.88}
+		
+	MDTextField:
+		id:n
+		input_filter: 'int'
+		hint_text: "Enter Number of Interval"
+		pos_hint: {'center_x':0.5,'center_y':0.81}
+	
+	MDTextField:
+		id:exp
+		hint_text: "Enter Expression"
+		pos_hint: {'center_x':0.5,'center_y':0.74}
+	
+	MDTextField:
+		id:d
+		input_filter: "int"
+		hint_text: "Required Correction Upto"
+		pos_hint: {'center_x':0.5,'center_y':0.67}
+	
+	MDFloatLayout:
+		MDLabel:
+			text: 'Decimal Places'
+			pos_hint: {'center_x': .5, 'center_y': .6}
+			
+		MDLabel:
+			text: 'Significant Figures'
+			pos_hint: {'center_x': .5, 'center_y': .55}
+			
+		MDCheckbox:
+	        group: 'group'
+	        size_hint: .1, .1
+	        pos_hint: {'center_x': .5, 'center_y': .6}
+	        on_active: root.correction = "dec"
+	
+		MDCheckbox:
+	        group: 'group'
+	        size_hint: .1, .1
+	        pos_hint: {'center_x': .5, 'center_y': .55}			
+			on_active: root.correction = "sig"	
+			
+									
+	MDRaisedButton:
+		text: "Submit"
+		size_hint: .3,.05
+		pos_hint: {'center_x':0.15, 'center_y':0.45}
+		on_press:
+			root.manager.transition.direction = 'left'
+			#root.on_submit()
+			root.validation()
+			
+	MDRaisedButton:
+		text: "Back"
+		size_hint: .3,.05
+		pos_hint: {'center_x':0.5, 'center_y':0.45}
+		on_press:
+			app.root.current = "menu"
+	
+	MDLabel:
+		text:"Simpson's Rule:"
+		pos_hint: {'center_x':0.5,'center_y':0.3}
+		
+	MDLabel:
+		text:"Trapezoidal's' Rule:"
+		pos_hint: {'center_x':0.5,'center_y':0.25}
+		
+	MDLabel:
+        id:out1
+        text: "answer"
+        pos_hint: {'center_x':1.1, 'center_y':0.3}
+		
+	MDLabel:
+        id:out2
+        text: "answer"
+        pos_hint: {'center_x':1.1, 'center_y':0.25}
+        	
+<MathScreen>:
+	name: "math"
+
+	BoxLayout:
+		orientation: "vertical"
+					
+		MDToolbar:
+			title: "Math"
+			elevation: 10
+			MDRaisedButton:
+				text:"Back"
+				pos_hint: {"center_y":.5}
+				on_press: app.root.current = "menu"
+			
+			#left_action_items: [["left-arrow", lambda x: root.callback()]]
+		
+				
+			
+				
+			
+			
+		ScrollView:
+			MDList:
+				OneLineListItem:
+					text:"Simpson and Trapezoidal Method"
+					on_press:
+						app.root.current = 'simtrap'
